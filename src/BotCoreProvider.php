@@ -15,7 +15,8 @@ class BotCoreProvider extends PackageServiceProvider
         $package
             ->name('bot-core')
             ->hasConfigFile()
-            ->hasTranslations();
+            ->hasTranslations()
+            ->hasViews();
     }
     
     public function packageRegistered(): void
