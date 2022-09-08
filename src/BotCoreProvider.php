@@ -16,7 +16,11 @@ class BotCoreProvider extends PackageServiceProvider
             ->name('bot-core')
             ->hasConfigFile()
             ->hasTranslations()
-            ->hasViews();
+            ->hasViews()
+            ->hasMigrations([
+                '2022_01_01_000000_create_chats_table'
+            ])
+            ->runsMigrations();
     }
     
     public function packageRegistered(): void
