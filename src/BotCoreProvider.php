@@ -26,7 +26,7 @@ class BotCoreProvider extends PackageServiceProvider
             //Privacy command
             if (config('bot-core.commands.privacy.enabled')) {
                 $bot
-                    ->onCommand('privacy', PrivacyCommand::class)
+                    ->onCommand(config('bot-core.commands.privacy.name'), PrivacyCommand::class)
                     ->description(config('bot-core.commands.privacy.description'));
             }
             
