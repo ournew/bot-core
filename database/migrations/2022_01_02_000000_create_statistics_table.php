@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateStatisticsTable extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('statistics', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('chat_id')->nullable();
+            $table->text('action');
+            $table->json('value')->nullable();
+            $table->text('category')->nullable();
+            $table->timestamp('collected_at')->useCurrent();
+            
+            $table->foreign('chat_id')->references('chat_id')->on('chats');
+            $table->index('collected_at');
+        });
+    }
+    
+    public function down(): void
+    {
+        Schema::dropIfExists('statistics');
+    }
+}
