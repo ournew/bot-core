@@ -2,6 +2,10 @@
 
 return [
     
+    'middlewares' => [
+        //
+    ],
+    
     'commands' => [
         
         'privacy' => [
