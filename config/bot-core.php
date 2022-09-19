@@ -2,6 +2,7 @@
 
 use OurNew\BotCore\Telegram\Commands\CancelCommand;
 use OurNew\BotCore\Telegram\Commands\PrivacyCommand;
+use OurNew\BotCore\Telegram\Conversations\FeedbackConversation;
 use OurNew\BotCore\Telegram\Middlewares\CheckMaintenance;
 use OurNew\BotCore\Telegram\Middlewares\CollectChat;
 
@@ -13,6 +14,13 @@ return [
     ],
     
     'commands' => [
+    
+        'feedback' => [
+            'enabled' => true,
+            'name' => 'feedback',
+            'description' => 'Send a feedback about the bot',
+            'callable' => FeedbackConversation::class,
+        ],
     
         'privacy' => [
             'enabled' => true,
@@ -29,6 +37,14 @@ return [
             'callable' => CancelCommand::class,
         ],
 
+    ],
+    
+    'developer' => [
+        'id' => (int)env('BOTCORE_DEVELOPER_ID'),
+        'name' => env('BOTCORE_DEVELOPER_NAME'),
+        'username' => env('BOTCORE_DEVELOPER_USERNAME'),
+        'email' => env('BOTCORE_DEVELOPER_EMAIL'),
+        'website' => env('BOTCORE_DEVELOPER_WEBSITE'),
     ]
 
 ];
