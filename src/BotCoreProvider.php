@@ -4,7 +4,6 @@ namespace OurNew\BotCore;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use OurNew\BotCore\Telegram\Commands\PrivacyCommand;
 use OurNew\BotCore\Telegram\Handlers\UpdateChatStatusHandler;
 use SergiX44\Nutgram\Nutgram;
 
@@ -63,11 +62,13 @@ class BotCoreProvider extends ServiceProvider
     
     public function loadCommands(Nutgram $bot): void
     {
-        //privacy command
-        if (config('bot-core.commands.privacy.enabled')) {
-            $bot
-                ->onCommand(config('bot-core.commands.privacy.name'), PrivacyCommand::class)
-                ->description(config('bot-core.commands.privacy.description'));
+        $commands = config('bot-core.commands');
+        foreach ($commands as $command) {
+            if (!$command['enabled']) {
+                continue;
+            }
+        
+            $bot->onCommand($command['name'], $command['callable'])->description($command['description']);
         }
     }
     
