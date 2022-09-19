@@ -7,6 +7,7 @@ use SergiX44\Nutgram\Telegram\Attributes\ParseMode;
 use SergiX44\Nutgram\Telegram\Types\Keyboard\InlineKeyboardButton;
 use SergiX44\Nutgram\Telegram\Types\Keyboard\InlineKeyboardMarkup;
 use function OurNew\BotCore\Helpers\message;
+use function OurNew\BotCore\Helpers\stats;
 
 class PrivacyCommand
 {
@@ -21,5 +22,7 @@ class PrivacyCommand
                     url: config('bot-core.commands.privacy.url')
                 )),
         ]);
+    
+        stats('privacy', 'command');
     }
 }
