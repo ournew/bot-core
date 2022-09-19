@@ -2,6 +2,7 @@
 
 use OurNew\BotCore\Telegram\Commands\CancelCommand;
 use OurNew\BotCore\Telegram\Commands\PrivacyCommand;
+use OurNew\BotCore\Telegram\Commands\StartCommand;
 use OurNew\BotCore\Telegram\Conversations\FeedbackConversation;
 use OurNew\BotCore\Telegram\Middlewares\CheckMaintenance;
 use OurNew\BotCore\Telegram\Middlewares\CollectChat;
@@ -14,6 +15,13 @@ return [
     ],
     
     'commands' => [
+    
+        'start' => [
+            'enabled' => true,
+            'name' => 'start',
+            'description' => 'Welcome message',
+            'callable' => StartCommand::class,
+        ],
     
         'feedback' => [
             'enabled' => true,
