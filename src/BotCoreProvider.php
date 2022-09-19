@@ -19,8 +19,8 @@ class BotCoreProvider extends PackageServiceProvider
             ->hasTranslations()
             ->hasViews()
             ->hasMigrations([
-                '2022_01_01_000000_create_chats_table',
-                '2022_01_02_000000_create_statistics_table',
+                'create_chats_table',
+                'create_statistics_table',
             ])
             ->runsMigrations();
     }
