@@ -1,18 +1,22 @@
 <?php
 
+use OurNew\BotCore\Telegram\Middlewares\CheckMaintenance;
+use OurNew\BotCore\Telegram\Middlewares\CollectChat;
+
 return [
     
     'middlewares' => [
-        //
+        CollectChat::class,
+        CheckMaintenance::class
     ],
     
     'commands' => [
         
         'privacy' => [
-            'enabled' => env('BOTCORE_PRIVACY_ENABLED', false),
-            'name' => env('BOTCORE_PRIVACY_NAME', 'privacy'),
-            'description' => env('BOTCORE_PRIVACY_DESCRIPTION', 'Privacy Policy'),
-            'url' => env('BOTCORE_PRIVACY_URL'),
+            'enabled' => false,
+            'name' => 'privacy',
+            'description' => 'Privacy Policy',
+            'url' => env('BOTCORE_COMMANDS_PRIVACY_URL'),
         ]
     
     ]
