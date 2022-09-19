@@ -5,6 +5,7 @@ namespace OurNew\BotCore;
 use Illuminate\Contracts\Foundation\Application;
 use OurNew\BotCore\Telegram\Commands\PrivacyCommand;
 use OurNew\BotCore\Telegram\Handlers\UpdateChatStatusHandler;
+use OurNew\BotCore\Telegram\Middlewares\CheckMaintenance;
 use OurNew\BotCore\Telegram\Middlewares\CollectChat;
 use SergiX44\Nutgram\Nutgram;
 use Spatie\LaravelPackageTools\Package;
@@ -39,6 +40,7 @@ class BotCoreProvider extends PackageServiceProvider
     {
         //load global middlewares
         $bot->middleware(CollectChat::class);
+        $bot->middleware(CheckMaintenance::class);
         
         //load optional global middlewares
         $middlewares = config('bot-core.middlewares');
