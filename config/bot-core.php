@@ -1,6 +1,7 @@
 <?php
 
 use OurNew\BotCore\Telegram\Commands\CancelCommand;
+use OurNew\BotCore\Telegram\Commands\HelpCommand;
 use OurNew\BotCore\Telegram\Commands\PrivacyCommand;
 use OurNew\BotCore\Telegram\Commands\StartCommand;
 use OurNew\BotCore\Telegram\Conversations\FeedbackConversation;
@@ -21,6 +22,13 @@ return [
             'name' => 'start',
             'description' => 'Welcome message',
             'callable' => StartCommand::class,
+        ],
+    
+        'help' => [
+            'enabled' => true,
+            'name' => 'help',
+            'description' => 'Help message',
+            'callable' => HelpCommand::class,
         ],
     
         'feedback' => [
