@@ -1,5 +1,6 @@
 <?php
 
+use OurNew\BotCore\Telegram\Commands\AboutCommand;
 use OurNew\BotCore\Telegram\Commands\CancelCommand;
 use OurNew\BotCore\Telegram\Commands\HelpCommand;
 use OurNew\BotCore\Telegram\Commands\PrivacyCommand;
@@ -46,6 +47,13 @@ return [
             'url' => env('BOTCORE_COMMANDS_PRIVACY_URL'),
         ],
     
+        'about' => [
+            'enabled' => true,
+            'name' => 'about',
+            'description' => 'About the bot',
+            'callable' => AboutCommand::class,
+        ],
+    
         'cancel' => [
             'enabled' => true,
             'name' => 'cancel',
@@ -53,6 +61,14 @@ return [
             'callable' => CancelCommand::class,
         ],
 
+    ],
+    
+    'info' => [
+        'name' => env('APP_NAME'),
+        'username' => env('BOTCORE_INFO_USERNAME'),
+        'version' => 'v1.0',
+        'source' => env('BOTCORE_INFO_SOURCE'),
+        'changelog' => env('BOTCORE_INFO_CHANGELOG'),
     ],
     
     'developer' => [
