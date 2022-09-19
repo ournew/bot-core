@@ -14,8 +14,7 @@
     "ext-json": "*",
     "illuminate/support": "^8.0|^9.0",
     "illuminate/database": "^8.0|^9.0",
-    "nutgram/nutgram": "^3.7",
-    "spatie/laravel-package-tools": "^1.12"
+    "nutgram/nutgram": "^3.7"
   },
   "autoload": {
     "psr-4": {

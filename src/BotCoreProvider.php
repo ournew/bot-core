@@ -3,30 +3,48 @@
 namespace OurNew\BotCore;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\ServiceProvider;
 use OurNew\BotCore\Telegram\Commands\PrivacyCommand;
 use OurNew\BotCore\Telegram\Handlers\UpdateChatStatusHandler;
 use SergiX44\Nutgram\Nutgram;
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class BotCoreProvider extends PackageServiceProvider
+class BotCoreProvider extends ServiceProvider
 {
-    public function configurePackage(Package $package): void
+    protected string $packageName = 'bot-core';
+    
+    public function boot()
     {
-        $package
-            ->name('bot-core')
-            ->hasConfigFile()
-            ->hasTranslations()
-            ->hasViews()
-            ->hasMigrations([
-                'create_chats_table',
-                'create_statistics_table',
-            ])
-            ->runsMigrations();
+        //load migrations
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        
+        //load views
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', $this->packageName);
+        
+        //load translations
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', $this->packageName);
+        
+        //publish config
+        $this->publishes([
+            __DIR__ . '/../config/bot-core.php' => config_path('bot-core.php'),
+        ], "{$this->packageName}-config");
+        
+        //publish views
+        $this->publishes([
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/' . $this->packageName),
+        ], "{$this->packageName}-views");
+        
+        //publish translations
+        $this->publishes([
+            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/' . $this->packageName),
+        ], "{$this->packageName}-translations");
     }
     
-    public function packageRegistered(): void
+    public function register()
     {
+        //load config
+        $this->mergeConfigFrom(__DIR__ . '/../config/bot-core.php', $this->packageName);
+        
+        //extend Nutgram
         $this->app->extend(Nutgram::class, function (Nutgram $bot, Application $app) {
             $this->loadGlobalMiddlewares($bot);
             $this->loadCommands($bot);
