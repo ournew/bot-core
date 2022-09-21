@@ -74,7 +74,7 @@ class StatisticsBuilder
         $data = Cache::get($this->cacheKey);
 
         if (blank($data)) {
-            return message('stats.empty');
+            return message('stats.empty', vendor: 'bot-core');
         }
 
         $params = [];
@@ -102,7 +102,7 @@ class StatisticsBuilder
             'data' => $params,
             'isLocalized' => $this->isLocalized,
             'lastUpdate' => Arr::get($data, '__last_update'),
-        ]);
+        ], 'bot-core');
     }
 
     protected function append(): void

@@ -4,6 +4,7 @@ namespace OurNew\BotCore\Telegram\Handlers;
 
 use SergiX44\Nutgram\Nutgram;
 use Throwable;
+use function OurNew\BotCore\Helpers\message;
 
 class ExceptionsHandler
 {
@@ -30,12 +31,12 @@ class ExceptionsHandler
             return;
         }
 
-        $bot->sendMessage(message('exception', [
-            'name' => str($e::class)->afterLast('\\'),
+        $bot->sendMessage(message('about', [
+            'name' => class_basename($e::class),
             'message' => $e->getMessage(),
             'line' => $e->getLine(),
             'file' => str($e->getFile())->replace(base_path(), ''),
-        ]), [
+        ], 'bot-core'), [
             'chat_id' => config('bot-core.developer.id'),
         ]);
     }

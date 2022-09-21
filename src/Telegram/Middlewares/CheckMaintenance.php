@@ -11,34 +11,34 @@ class CheckMaintenance
     public function __invoke(Nutgram $bot, $next): void
     {
         $chat = $bot->getData(Chat::class);
-        
+
         if (app()->isDownForMaintenance()) {
-            
+
             if ($chat->chat_id === config('owner.id')) {
                 $bot->sendMessage('<b>⚠ MAINTENANCE MODE ENABLED ⚠</b>', [
                     'parse_mode' => ParseMode::HTML,
                 ]);
                 $next($bot);
-                
+
                 return;
             }
-            
+
             if ($bot->isCallbackQuery()) {
                 $bot->answerCallbackQuery([
                     'text' => trans('maintenance.active'),
                     'show_alert' => true,
                 ]);
-                
+
                 return;
             }
-            
-            $bot->sendMessage(message('maintenance'), [
+
+            $bot->sendMessage(message('maintenance', vendor: 'bot-core'), [
                 'parse_mode' => ParseMode::HTML,
             ]);
-            
+
             return;
         }
-        
+
         $next($bot);
     }
 }

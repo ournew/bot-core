@@ -14,8 +14,8 @@ class HelpCommand
         $bot->sendMessage(message('help'), [
             'parse_mode' => ParseMode::HTML,
             'disable_web_page_preview' => true,
-        ]);
-        
+        ], 'bot-core');
+
         stats('help', 'command');
     }
 }

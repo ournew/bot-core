@@ -10,14 +10,19 @@ use SergiX44\Nutgram\Nutgram;
  * Render an HTML message
  * @param string $view
  * @param array $values
+ * @param string|null $vendor
  * @return string
  */
-function message(string $view, array $values = []): string
+function message(string $view, array $values = [], ?string $vendor = null): string
 {
-    return rescue(fn() => Str::of(view("bot-core::messages.$view", $values)->render())
+    if ($vendor !== null) {
+        $vendor = "$vendor::";
+    }
+
+    return rescue(fn () => Str::of(view($vendor.'messages.'.$view, $values)->render())
         ->replaceMatches('/\r\n|\r|\n/', '')
         ->replace(['<br>', '</br>', '<BR>', '</BR>'], "\n")
-        ->toString(), 'messages.' . $view, true);
+        ->toString(), 'messages.'.$view, true);
 }
 
 /**

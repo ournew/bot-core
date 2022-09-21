@@ -14,8 +14,8 @@ class AboutCommand
         $bot->sendMessage(message('about'), [
             'parse_mode' => ParseMode::HTML,
             'disable_web_page_preview' => true,
-        ]);
-        
+        ], 'bot-core');
+
         stats('about', 'command');
     }
 }

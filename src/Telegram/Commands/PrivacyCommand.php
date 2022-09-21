@@ -13,7 +13,7 @@ class PrivacyCommand
 {
     public function __invoke(Nutgram $bot): void
     {
-        $bot->sendMessage(message('privacy'), [
+        $bot->sendMessage(message('privacy', vendor: 'bot-core'), [
             'parse_mode' => ParseMode::HTML,
             'disable_web_page_preview' => true,
             'reply_markup' => InlineKeyboardMarkup::make()
@@ -22,7 +22,7 @@ class PrivacyCommand
                     url: config('bot-core.commands.privacy.url')
                 )),
         ]);
-    
+
         stats('privacy', 'command');
     }
 }
