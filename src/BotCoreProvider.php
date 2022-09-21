@@ -7,6 +7,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use OurNew\BotCore\Concerns\StatsImplementation;
 use OurNew\BotCore\Console\UpdateBotStatsCommand;
+use OurNew\BotCore\Telegram\Handlers\ExceptionsHandler;
 use OurNew\BotCore\Telegram\Handlers\UpdateChatStatusHandler;
 use SergiX44\Nutgram\Nutgram;
 
@@ -67,6 +68,7 @@ class BotCoreProvider extends ServiceProvider
             $this->loadGlobalMiddlewares($bot);
             $this->loadCommands($bot);
             $this->loadHandlers($bot);
+            $this->loadExceptionHandlers($bot);
 
             return $bot;
         });
@@ -77,7 +79,7 @@ class BotCoreProvider extends ServiceProvider
         }
     }
 
-    public function loadGlobalMiddlewares(Nutgram $bot): void
+    protected function loadGlobalMiddlewares(Nutgram $bot): void
     {
         $middlewares = config('bot-core.middlewares');
         foreach ($middlewares as $middleware) {
@@ -85,7 +87,7 @@ class BotCoreProvider extends ServiceProvider
         }
     }
 
-    public function loadCommands(Nutgram $bot): void
+    protected function loadCommands(Nutgram $bot): void
     {
         $commands = config('bot-core.commands');
         foreach ($commands as $command) {
@@ -97,9 +99,20 @@ class BotCoreProvider extends ServiceProvider
         }
     }
 
-    public function loadHandlers(Nutgram $bot): void
+    protected function loadHandlers(Nutgram $bot): void
     {
         $bot->onMyChatMember(UpdateChatStatusHandler::class);
+    }
+
+    protected function loadExceptionHandlers(Nutgram $bot): void
+    {
+        $exceptionList = config('bot-core.exceptions.throw');
+        foreach ($exceptionList as $pattern => $exception) {
+            $bot->onApiError($pattern, fn (Nutgram $bot, $e) => throw new $exception($e->getMessage()));
+        }
+
+        $bot->onApiError([ExceptionsHandler::class, 'api']);
+        $bot->onException([ExceptionsHandler::class, 'global']);
     }
 
 

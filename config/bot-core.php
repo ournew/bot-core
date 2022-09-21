@@ -12,9 +12,25 @@ use OurNew\BotCore\Telegram\Middlewares\CollectChat;
 
 return [
 
+    'info' => [
+        'name' => env('APP_NAME'),
+        'username' => env('BOTCORE_INFO_USERNAME'),
+        'version' => 'v1.0',
+        'source' => env('BOTCORE_INFO_SOURCE'),
+        'changelog' => env('BOTCORE_INFO_CHANGELOG'),
+    ],
+
+    'developer' => [
+        'id' => (int)env('BOTCORE_DEVELOPER_ID'),
+        'name' => env('BOTCORE_DEVELOPER_NAME'),
+        'username' => env('BOTCORE_DEVELOPER_USERNAME'),
+        'email' => env('BOTCORE_DEVELOPER_EMAIL'),
+        'website' => env('BOTCORE_DEVELOPER_WEBSITE'),
+    ],
+
     'middlewares' => [
         CollectChat::class,
-        CheckMaintenance::class
+        CheckMaintenance::class,
     ],
 
     'commands' => [
@@ -75,20 +91,16 @@ return [
 
     ],
 
-    'info' => [
-        'name' => env('APP_NAME'),
-        'username' => env('BOTCORE_INFO_USERNAME'),
-        'version' => 'v1.0',
-        'source' => env('BOTCORE_INFO_SOURCE'),
-        'changelog' => env('BOTCORE_INFO_CHANGELOG'),
+    'exceptions' => [
+        'throw' => [
+            '.*bot was blocked by the user.*' => OurNew\BotCore\Telegram\Exceptions\UserBlockedException::class,
+            '.*user is deactivated.*' => OurNew\BotCore\Telegram\Exceptions\UserDeactivatedException::class,
+        ],
+        'mute' => [
+            OurNew\BotCore\Telegram\Exceptions\UserBlockedException::class,
+            OurNew\BotCore\Telegram\Exceptions\UserDeactivatedException::class,
+        ],
+        'send' => env('BOTCORE_EXCEPTIONS_SEND', true),
     ],
-
-    'developer' => [
-        'id' => (int)env('BOTCORE_DEVELOPER_ID'),
-        'name' => env('BOTCORE_DEVELOPER_NAME'),
-        'username' => env('BOTCORE_DEVELOPER_USERNAME'),
-        'email' => env('BOTCORE_DEVELOPER_EMAIL'),
-        'website' => env('BOTCORE_DEVELOPER_WEBSITE'),
-    ]
 
 ];
