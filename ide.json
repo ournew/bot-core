@@ -2,19 +2,6 @@
     "$schema": "https://laravel-ide.com/schema/laravel-ide-v2.json",
     "completions": [
         {
-            "complete": "viewName",
-            "condition": [
-                {
-                    "functionNames": [
-                        "message"
-                    ],
-                    "parameters": [
-                        1
-                    ]
-                }
-            ]
-        },
-        {
             "complete": "directoryFiles",
             "options": {
                 "directory": "resources/views/messages",
@@ -27,6 +14,24 @@
                     ],
                     "parameters": [
                         1
+                    ]
+                }
+            ]
+        },
+        {
+            "complete": "staticStrings",
+            "options": {
+                "strings": [
+                    "bot-core"
+                ]
+            },
+            "condition": [
+                {
+                    "functionNames": [
+                        "message"
+                    ],
+                    "parameters": [
+                        3
                     ]
                 }
             ]
